@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:bmi/resault.dart';
 import 'package:flutter/material.dart';
 
 class BmiCalculatorScreen extends StatefulWidget {
@@ -173,23 +176,23 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              IconButton(onPressed: (){
-                                setState(() {
-                                  weight--;
-                                });
-                              }, icon: Icon(Icons.remove_circle,
-                                size: 40,
-                                color: Colors.blue,
-                              )),
+                              FloatingActionButton(
+                                onPressed: (){setState(() {weight--;});},
+                                child: Icon(Icons.remove,
+                                size: 30,
+                                ),
+                                mini: true,
+
+                              ),
                                SizedBox(width: 15.0,),
-                              IconButton(onPressed: (){
+                              FloatingActionButton(onPressed: (){
                                 setState(() {
                                   weight++;
                                 });
-                              }, icon: Icon(Icons.add_circle,
-                                size: 40,
-                                color: Colors.blue,
-                              )),
+                              }, child: Icon(Icons.add,
+                                size: 30,
+                              ),
+                              mini: true,),
                             ],)
                         ],),
                     ),
@@ -221,23 +224,23 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              IconButton(onPressed: (){
+                              FloatingActionButton(onPressed: (){
                                 setState(() {
                                   age--;
                                 });
-                              }, icon: Icon(Icons.remove_circle,
-                                size: 40,
-                                color: Colors.blue,
-                              )),
+                              }, child: Icon(Icons.remove,
+                                size: 30,
+                              ),
+                              mini: true,),
                               SizedBox(width: 10,),
-                              IconButton(onPressed: (){
+                              FloatingActionButton(onPressed: (){
                                 setState(() {
                                   age++;
                                 });
-                              }, icon: Icon(Icons.add_circle,
-                                size: 40,
-                                color: Colors.blue,
-                              )),
+                              }, child: Icon(Icons.add,
+                                size: 30,
+                              ),
+                              mini: true,),
                             ],)
                         ],),
                     ),
@@ -252,7 +255,18 @@ class _BmiCalculatorScreenState extends State<BmiCalculatorScreen> {
             width: double.infinity,
             height: 40.0,
             child: MaterialButton(
-              onPressed: (){},
+              onPressed: (){
+                double result = weight / pow(height / 100, 2);
+                Navigator.push(context,
+                    MaterialPageRoute(
+                      builder: (context) => ResultScreen(
+                        isMale : isMale,
+                        height : height.round(),
+                        age : age,
+                        weight : weight,
+                        result : result.round(),
+                      ),));
+              },
               child: Text('CALCULATE'),
               color: Colors.redAccent,
             ),
